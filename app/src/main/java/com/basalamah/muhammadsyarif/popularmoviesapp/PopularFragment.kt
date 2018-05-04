@@ -48,7 +48,22 @@ class PopularFragment : Fragment() {
     }
     private fun getData(){
         if (isNetworkConnected()){
-            return
+            MyApplication.api.getPopular().enqueue(object : Callback<MovieResponse>{
+                override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
+                    e(tag, t?.message)
+               }
+
+                override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
+                    i(tag,"data: ${Gson().toJsonTree(response?.code())}")
+                    val nMovieList=response?.body()?.results
+                    nMovieList?.let {
+                        movieList.addAll(it)
+                        adapter.notifyDataSetChanged()
+                    }
+
+                }
+
+            })
         }else{
             AlertDialog.Builder(activity)
                     .setTitle("No Internet Connection")
@@ -56,22 +71,7 @@ class PopularFragment : Fragment() {
                     .setPositiveButton(android.R.string.ok,DialogInterface.OnClickListener { dialogInterface, i ->  })
                     .setIcon(android.R.drawable.ic_dialog_alert).show()
         }
-        MyApplication.api.getPopular().enqueue(object : Callback<MovieResponse>{
-            override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
-                e(tag, t?.message)
-            }
 
-            override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
-                i(tag,"data: ${Gson().toJsonTree(response?.code())}")
-                val nMovieList=response?.body()?.results
-                nMovieList?.let {
-                    movieList.addAll(it)
-                    adapter.notifyDataSetChanged()
-                }
-
-            }
-
-        })
     }
 
     private fun isNetworkConnected():Boolean{

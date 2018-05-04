@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFD180"
     android:fitsSystemWindows="true"
     tools:context="com.basalamah.muhammadsyarif.popularmoviesapp.DetailActivity">
 
@@ -31,7 +32,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_launcher_background" />
+                app:srcCompat="@drawable/ic_launcher_background"
+                tools:ignore="VectorDrawableCompat" />
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -139,8 +141,8 @@
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="8dp">
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp">
 
                     <TextView
                         android:id="@+id/textView6"
